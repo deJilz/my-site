@@ -1,22 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
-{% block page_content %}
-<h1>Projects</h1>
-<div class="row">
-{% for project in projects %}
-    <div class="col-md-4">
-        <div class="card mb-2">
-            <img class="card-img-top" src="{% static project.image %}">
-            <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description }}</p>
-                <a href="{% url 'project_detail' project.pk %}"
-                   class="btn btn-primary">
-                    Read More
-                </a>
+
+{% block block_head %}
+<title>Index of Projects</title>
+<meta name="description" content="An index of the projects on my personal website.">
+<meta name="author" content="Connor DeJohn">
+{% endblock %}
+
+{% block block_style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/project_index.css' %}">
+{% endblock %}
+
+
+
+{% block block_body %}
+    <div class="all-content">
+        <div class="header-row">
+            <h1>Projects</h1>
+            <p>This page documents the projects I have worked on and the process of completing them.</p>
+        </div>
+
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-md-4">
+                <div class="card mb-2">
+                    {% comment %} <img class="card-img-top" src="{% static project.image %}"> {% endcomment %}
+                    <div class="card-body">
+                        <a class="card-title btn btn-primary" href="{% url 'project_detail' project.pk %}">
+                            {{ project.title }}
+                        </a>
+                        <p class="card-text">{{ project.description|truncatechars:30 }}</p>
+                        
+                    </div>
+                </div>
             </div>
+            <hr>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
-</div>
 {% endblock %}
